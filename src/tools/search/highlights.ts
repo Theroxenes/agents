@@ -316,7 +316,18 @@ export function expandHighlights(
           references,
         });
       }
-
+      // --- WEBDIAG (verification only — do NOT merge) ---
+      const _pre = result.highlights.reduce(
+        (n, h) => n + (h.text.length ?? 0),
+        0
+      );
+      const _post = highlights.reduce((n, h) => n + (h.text.length ?? 0), 0);
+      // eslint-disable-next-line no-console
+      console.log(
+        `WEBDIAG expand url=${result.link ?? '?'} ` +
+          `count=${highlights.length} preBytes=${_pre} postBytes=${_post} ` +
+          `ratio=${(_post / Math.max(_pre, 1)).toFixed(2)}`
+      );
       resultCopy.highlights = highlights;
       delete resultCopy.content;
       delete resultCopy.references;
